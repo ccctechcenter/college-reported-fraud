@@ -1,0 +1,30 @@
+version: '3'
+services:
+  base:
+    build: .
+    container_name: monitor-dir
+    environment:
+      # see .env file for values
+      - PORT=${PORT}
+      - TOKEN_URL=${TOKEN_URL}
+      - API_URL=${API_URL}
+      - API_CLIENT_ID=${API_CLIENT_ID}
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
+    ports: 
+      - 80:3000
+
+    volumes:
+      - /node_modules
+      - ./:/app
+    working_dir: /app
+
+  install:
+    extends:
+      service: base
+    command: npm install
+    
+  dev:
+    extends:
+      service: base
+    command: npm run dev
