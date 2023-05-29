@@ -85,26 +85,3 @@ For advanced users familiar with node and npm, you can use the below from the mo
 
 `npm run dev`
 
-___________________
-
-# Table of Contents
-[CCCTC documentation](#ccctc-documentation)
-
-  [Introduction](#indtoruction)
-      1. [sub 1](#example)
-      Here is some 
-   1. [MORE](#example)
-      sub 2
-
-
-# Table of Contents 1
-1. [Example](#example)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-4. [Fourth Example](#fourth-example)
-
-
-## Example
-## Example2
-## Third Example
-## Fourth Example
