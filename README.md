@@ -16,7 +16,7 @@ This is open source software with contributions welcome from integrators with th
 
   - [Monitor Directory and API](./monitor-dir/README.md)
 
-    Client that monitors a directory for fraud reports and syncs files to CCCTC using the Frad API.
+    Client that monitors a directory for fraud reports and syncs files to CCCTC using the Fraud API.
 
 
 ### CCCTC documentation
