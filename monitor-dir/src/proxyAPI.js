@@ -1,5 +1,5 @@
 /**
- * Local proxy to CCCTC Fraud API.
+ * Local proxy to CCCTC Fraud API using GraphQL
  */
 const express = require("express");
 const fetch = require('node-fetch')
@@ -35,7 +35,6 @@ expressApp.get("/token", async (req, res) => {
   })
     .then(res => res.json())
     .then(res => {
-      
       if( res.error ) {
         console.error('returned token ', res);
         throw Error( res.error )
@@ -81,53 +80,3 @@ expressApp.post("/graphql", async (req, res) => {
 
   res.send(response)
 });
-
-// TODO: tester to get new token on startup
-const tester = async () => {
-  // test getting token
-  const token = await fetch('http://localhost:' + PORT + '/token')
-    .then(res => res.json())
-    .then(res => {
-      console.log("--- token: ", res )
-      return res;
-    })
-    .catch(error => {
-      console.error(`[AUTH]: Failed to retrieve token: ${error}`);
-    });
-  // console.log("---- token:", token);
-
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", "Bearer " + token.access_token);
-
-  var graphql = JSON.stringify({
-    query: "mutation FraudReportSubmit($input: FraudReportSubmitInput!) { \
-      FraudReportSubmit(input: $input) { \
-        cccId \
-        appId \
-        fraudType \
-      }}",
-    variables: { "input": { "appId": 1 } }
-  })
-
-  const raw = await fetch('http://localhost:' + PORT + '/graphql', {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: graphql,
-    redirect: 'follow'
-  })
-    .then(res => res.json())
-    .catch(err => console.error(err));
-
-  console.log('[TEST] raw result', raw);
-  // const response = await raw.json();
-
-  // console.log("--- JSON response ", response)
-
-};
-setTimeout(function () {
-  // console.log('[TEST] Running test....');
-  // tester()
-}, 5000);
-
-

@@ -1,7 +1,7 @@
 # Overview
 
 For an overview of clients to the fraud API, see the parent doc [CCCTC Documentation](../README.md#ccctc-documentation).
-
+e
 This module watches the [input-dir](./input-dir/) for JSON files that represent college fraud reports.  Valid reports are sent to CCCTC using the Fraud API.
 
 This is an example integration where fraud reports saved into a directory trigger automatic updates to CCCTC using the Fraud API.
@@ -39,7 +39,7 @@ TODO: .... show example
 
 ### Modifying the client
 
-Code using HTTP and using the fraud API is in [expressAPI.js](./src/expressAPI.js) where endpoints for `/token` and `/submit` exist.
+Code using HTTP and using the fraud API is in [proxyAPI.js](./src/proxyAPI.js) where endpoints for `/token` and `/submit` exist.
 
 The directory monitor logic is in [server.js](./src/server.js).  Logic to validate the input and proxy to express is detailed.
 
@@ -56,6 +56,48 @@ The directory monitor logic is in [server.js](./src/server.js).  Logic to valida
    - API Credentials obtained through Enabling Services
 
 ### Local Docker
+
+
+Steps to set up local repo: 
+
+  1. clone repo:  git clone https://github.com/bstout/college-reported-fraud.git
+
+  Windows with wsl2: 
+    1. sudo apt update && sudo apt upgrade
+
+    2. Add Docker’s official GPG key:
+      sudo install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+      echo \
+        "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+      sudo apt install docker.io
+
+  2. docker compose build 
+
+  3. docker compose up install 
+
+  4. edit .env and fill out 
+    API_CLIENT_ID=
+    API_USERNAME=
+    API_PASSWORD=
+
+  4. docker compose up dev 
+
+  5. Browser: http://localhost/
+    
+    `Server is running!`
+
+  6. Browser:  http://localhost/token
+
+
+
+
+
 
 To run all the dependencies and configuration in a docker environment follow these steps from this module's root folder: 
 
