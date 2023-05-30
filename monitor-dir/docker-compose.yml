@@ -5,7 +5,6 @@ services:
     container_name: monitor-dir
     environment:
       # see .env file for values
-      - PORT=${PORT}
       - TOKEN_URL=${TOKEN_URL}
       - API_URL=${API_URL}
       - API_CLIENT_ID=${API_CLIENT_ID}

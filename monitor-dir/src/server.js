@@ -6,7 +6,6 @@ require('dotenv').config()
 const chokidar = require('chokidar');
 const fs = require('fs');
 const joi = require('joi')
-// const fetch = require('node-fetch')
 const { getNewToken, sendFraudReport } = require('./proxyAPI')
 
 const { API_CLIENT_ID, API_USERNAME, API_PASSWORD } = process.env;
