@@ -9,55 +9,59 @@ This is an example integration where fraud reports saved into a directory trigge
 
 ## Prerequisites 
 
-   - Docker Desktop in required for the docker examples. [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
+   - Docker in required for the docker examples. [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
 
    - API Credentials obtained through Enabling Services
 
 ## Running the client
 
-After completing the below [requirements](#prerequisites), you should be able to run the client.
-
-In a terminal, run the [local docker](#local-docker) steps to start the module.
+After completing the above and setting your credentials in the [properties file](./.env),  you should be able to run the client and interact with the API locally.
 
 ### Local Docker
 
 To run all the dependencies and configuration in a docker environment follow these steps from this module's root folder: 
 
-   - STEP 1: 
+In a terminal, run these commands: 
+
+- STEP 1: 
+
+   `docker compose build`
    
-      `docker compose build`
-      
-      This sets up docker and builds the code.
+   This sets up docker and builds the code.
 
-   - STEP 2: 
+- STEP 2: 
+
+   `docker compose up install`
+
+   This downloads and installs all the dependencoes and libraries
+
+- STEP 3: 
+
+   `docker compose up dev`
+
+   This starts up the module in a docker container on your computer that monitors the `input-dir` for changes.
    
-      `docker compose up install`
+   In this mode, any changes to the source restarts the server for hot-reloading.
 
-      This downloads and installs all the dependencoes and libraries
+On startup, the client will test the configuration by trying to get an API token with the configs you saved in [properties](./.env).
 
-   - STEP 3: 
-   
-      `docker compose up dev`
+The startup logs should look like this:
+```
+monitor-dir  | [nodemon] restarting due to changes...
+monitor-dir  | [nodemon] starting `node server.js src/server.js`
+monitor-dir  | Testing configs by getting a new token....
+monitor-dir  | [TOKEN]: Fetching new token from https://auth.ci.ccctechcenter.org/auth/realms/API/protocol/openid-connect/token
+monitor-dir  | {
+monitor-dir  |   access_token: 'eyJhbGciOiJSU.....',
+monitor-dir  |   expires_in: 300,
+monitor-dir  |   refresh_expires_in: 1800,
+monitor-dir  |   refresh_token: 'eyJhbGciOiJIUzI1N....',
+monitor-dir  |   token_type: 'Bearer',
+monitor-dir  |   'not-before-policy': 0,
+monitor-dir  |   session_state: '12722d2d-dc66-4ab9-ab73-b2680e03d943',
+monitor-dir  |   scope: 'email profile'
+monitor-dir  | }
 
-      This starts up the module in a docker container on your computer that monitors the `input-dir` and takes requests at `http://localhost`
-      
-      In this mode, any changes to the source restarts the server for hot-reloading.
-
-#### Get API Token
-
-Test your configuration by getting an API token.  Visit [http://localhost/token](http://localhost/token) to see something like: 
-
-```JSON
-{
-   "access_token": "eyJhbGciOiJSU.....",
-   "expires_in": 300,
-   "refresh_expires_in": 1800,
-   "refresh_token": "eyJhbGciOiJIUzI1NiI.....",
-   "token_type": "Bearer",
-   "not-before-policy": 0,
-   "session_state": "9b2567c4-206d-4359-8f18-3cf9875fef7e",
-   "scope": "email profile"
-}
 ```
 
 #### Submit a fraud report
@@ -85,9 +89,9 @@ monitor-dir  | }
 
 ### Modifying the client
 
-This is a simple client with code for the fraud API in [proxyAPI.js](./src/proxyAPI.js) where endpoints for `/token` and `/submit` exist.
+This is a simple client with code for the fraud API in [proxyAPI.js](./src/proxyAPI.js).
 
-The directory monitor logic is in [server.js](./src/server.js).  Logic to validate the input and proxy to express is detailed therein.
+The directory monitor is in [server.js](./src/server.js).  Logic to validate the input and call 
 
 ### Local stack
 

@@ -1,14 +1,15 @@
 /**
  * main module for server startup/init
  */
+require('dotenv').config()
+
 const chokidar = require('chokidar');
 const fs = require('fs');
 const joi = require('joi')
-const fetch = require('node-fetch')
-require('dotenv').config()
-require('./proxyAPI');
+// const fetch = require('node-fetch')
+const { getNewToken, sendFraudReport } = require('./proxyAPI')
 
-const { PORT } = process.env;
+const { API_CLIENT_ID, API_USERNAME, API_PASSWORD } = process.env;
 
 const schema = joi.object({
   appId: joi.number().integer(),
@@ -35,27 +36,7 @@ async function handleInputfileChange(path) {
     const { value, error } = schema.validate(obj);
     if (error) throw error;
 
-    // send to proxy  
-    const graphql = {
-      query: "mutation FraudReportSubmit($input: FraudReportSubmitInput!) { \
-        FraudReportSubmit(input: $input) { appId cccId fraudType }}",
-      variables: {
-        "input": {
-          "cccId": value.cccId,
-          "fraudType": value.fraudType,
-          "appId": value.appId,
-          "reportedByMisCode": value.reportedByMisCode
-        }
-      }
-    };
-
-    const result = await fetch('http://localhost:' + PORT + '/graphql', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(graphql)
-    })
-      .then(res => res.json())
-      .catch(err => console.error("[INPUT] error: ", err));
+    const result = await sendFraudReport( value );
 
     console.log('[INPUT] result', result);
 
@@ -84,3 +65,11 @@ watcher
   });
 
 
+/**
+ * If settings in .env file are configured, try to get a token on startup
+ */
+if (API_CLIENT_ID && API_USERNAME && API_PASSWORD) {
+  console.log("Testing configs by getting a new token....");
+
+  getNewToken().then( tok => console.log(tok));
+}
