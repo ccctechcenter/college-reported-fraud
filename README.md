@@ -10,17 +10,13 @@ This is open source software with contributions welcome from integrators with th
 
 ## Fraud API Clients  
 
-  - [Postman](./postman) 
+  - [Postman](./postman-tests/) 
 
     This is a [postman collection](https://www.postman.com/) of calls using the Fraud API to submit and query fraud reports.
 
   - [Monitor Directory and API](./monitor-dir/README.md)
 
     Client that monitors a directory for fraud reports and syncs files to CCCTC using the Frad API.
-
-  - TODO: web based submit and query tool 
-
-    ...
 
 
 ### CCCTC documentation
