@@ -1,5 +1,5 @@
 /**
- * Local proxy to CCCTC Fraud API using GraphQL
+ * Local calls to CCCTC Fraud API using GraphQL
  */
 const fetch = require('node-fetch')
 

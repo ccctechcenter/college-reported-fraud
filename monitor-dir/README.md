@@ -89,7 +89,7 @@ monitor-dir  | }
 
 ### Modifying the client
 
-This is a simple client with code for the fraud API in [proxyAPI.js](./src/proxyAPI.js).
+This is a simple client with code for the fraud API in [fraudAPI.js](./src/fraudAPI.js).
 
 The directory monitor is in [server.js](./src/server.js).  Logic to validate the input and call 
 
