@@ -67,7 +67,9 @@ watcher
 /**
  * If settings in .env file are configured, try to get a token on startup
  */
-if (API_CLIENT_ID && API_USERNAME && API_PASSWORD) {
+if (!API_CLIENT_ID || !API_USERNAME || !API_PASSWORD) {
+  console.error("ERROR: Configuration properties are not sets")
+} else {  
   console.log("Testing configs by getting a new token....");
 
   getNewToken().then( tok => console.log(tok));
