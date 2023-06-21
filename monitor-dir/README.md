@@ -1,7 +1,7 @@
 # Overview
 
 For an overview of clients to the fraud API, see the parent doc [CCCTC Documentation](../README.md#ccctc-documentation).
-e
+
 This module watches the [input-dir](./input-dir/) for JSON files that represent college fraud reports.  Valid reports are sent to CCCTC using the Fraud API.
 
 This is an example integration where fraud reports saved into a directory trigger automatic updates to CCCTC using the Fraud API.
